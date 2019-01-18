@@ -49,13 +49,7 @@ class Usuario {
 
         if(count($results) > 0) {//validação se tem pelo menos um indice 
 
-            $row = $results[0];
-            //dados que foram pegados associativos
-            $this->setIdusuario($row['idusuario']);
-            $this->setDeslogin($row['deslogin']);
-            $this->setDessenha($row['dessenha']);
-            $this->setDtcadastro(new DateTime($row['dtcadastro']));//padrão de data e hora.
-
+            $this->setData($results[0]);
         }
 
     } 
@@ -88,18 +82,38 @@ class Usuario {
 
         if(count($results) > 0) {//validação se tem pelo menos um indice 
 
-            $row = $results[0];
-            //dados que foram pegados associativos
-            $this->setIdusuario($row['idusuario']);
-            $this->setDeslogin($row['deslogin']);
-            $this->setDessenha($row['dessenha']);
-            $this->setDtcadastro(new DateTime($row['dtcadastro']));//padrão de data e hora.
-
+            $this->setData($results[0]);
+           
         }  else {
 
             throw new Exception ("Login e/ou Senha inválidos");
         }
         
+    }
+
+    public function setData($data){
+
+         //dados que foram pegados associativos
+         $this->setIdusuario($data['idusuario']);
+         $this->setDeslogin($data['deslogin']);
+         $this->setDessenha($data['dessenha']);
+         $this->setDtcadastro(new DateTime($data['dtcadastro']));//padrão de data e hora.
+
+    }
+
+    public function insert(){
+
+        $sql = new Sql();
+                        //procedures - nome da tabela - e o que ela faz.                 
+        $results = $sql->select("CALL sp_usuarios_insert(:LOGIN, :PASSWORD)", array(
+            ':LOGIN'=>$this->getDeslogin(),
+            ':PASSWORD'=>$this->getDessenha()
+        ));
+
+        if(count ($results) > 0 ) {
+            
+            $this->setData($results[0]);
+        }
     }
 
     public function __toString() {

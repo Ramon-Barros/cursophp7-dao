@@ -28,11 +28,20 @@ echo $root;*/
 
 // carregar um usuario usando senha e login
 
-$usuario = new Usuario();
+/*$usuario = new Usuario();
 
 $usuario->login("Jabota","1307");
 
-echo $usuario;
+echo $usuario;*/
+
+$aluno = new Usuario();
+
+$aluno->setDeslogin("Aluno");
+$aluno->setDessenha("@lun0");
+
+$aluno->insert();
+
+echo $aluno;
 
 
 
