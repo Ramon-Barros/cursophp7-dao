@@ -60,6 +60,48 @@ class Usuario {
 
     } 
 
+    public static function getList(){
+
+        $sql = new Sql();
+
+        return  $sql->select("SELECT * FROM tb_usuarios ORDER BY deslogin;");
+    }
+
+    public static function search($login){
+
+        $sql = new Sql();
+
+        return $sql->select("SELECT * FROM tb_usuarios WHERE deslogin LIKE :SEARCH ORDER BY deslogin", array(
+            ':SEARCH'=>"%".$login."%"
+        ) );
+    }
+
+    public function login($login, $password){
+
+        
+        $sql = new Sql();
+
+        $results = $sql->select("SELECT * FROM tb_usuarios WHERE  deslogin = :USUARIO AND dessenha = :SENHA", array(
+            ":USUARIO"=>$login,
+            ":SENHA" =>$password
+        ));
+
+        if(count($results) > 0) {//validação se tem pelo menos um indice 
+
+            $row = $results[0];
+            //dados que foram pegados associativos
+            $this->setIdusuario($row['idusuario']);
+            $this->setDeslogin($row['deslogin']);
+            $this->setDessenha($row['dessenha']);
+            $this->setDtcadastro(new DateTime($row['dtcadastro']));//padrão de data e hora.
+
+        }  else {
+
+            throw new Exception ("Login e/ou Senha inválidos");
+        }
+        
+    }
+
     public function __toString() {
 
         return json_encode(array(
