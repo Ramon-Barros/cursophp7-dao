@@ -33,15 +33,20 @@ echo $root;*/
 $usuario->login("Jabota","1307");
 
 echo $usuario;*/
-
-$aluno = new Usuario();
-
-$aluno->setDeslogin("Aluno");
-$aluno->setDessenha("@lun0");
+/*criando um usuario
+$aluno = new Usuario("Jf_Chico", "2345678");
 
 $aluno->insert();
 
-echo $aluno;
+echo $aluno;*/
+
+$usuario = new Usuario();
+
+$usuario->loadByID(11);
+
+$usuario->update("Professor", "pr07e550r");
+
+echo $usuario;
 
 
 
