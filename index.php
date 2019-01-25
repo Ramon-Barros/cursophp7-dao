@@ -40,13 +40,25 @@ $aluno->insert();
 
 echo $aluno;*/
 
+
+/*
+alterar um usuario
 $usuario = new Usuario();
 
 $usuario->loadByID(11);
 
 $usuario->update("Professor", "pr07e550r");
 
+echo $usuario;*/
+
+$usuario = new Usuario();
+
+$usuario->loadByID(3);
+
+$usuario->delete();
+
 echo $usuario;
+
 
 
 
